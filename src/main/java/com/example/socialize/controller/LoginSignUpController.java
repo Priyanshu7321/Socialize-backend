@@ -10,7 +10,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("start")
-public class LoginSignUp {
+public class LoginSignUpController {
     @Autowired
     LoginSignupService lsService;
     @PostMapping("signup")
@@ -24,7 +24,7 @@ public class LoginSignUp {
     }
 
     @PatchMapping("update_record")
-    public ResponseEntity<String> updateUser(@RequestBody User user){
+    public ResponseEntity<Map<String,String>> updateUser(@RequestBody User user){
         return lsService.update(user);
     }
 }

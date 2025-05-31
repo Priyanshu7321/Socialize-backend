@@ -1,0 +1,18 @@
+componentType: service
+name: socialize-app
+source:
+  type: Docker
+  image: your-dockerhub-username/socialize-app:latest
+build:
+  env:
+    - name: JAVA_OPTS
+      value: "-Xms256m -Xmx512m"
+  command: ["java", "-jar", "socialize.jar"]
+container:
+  port: 8080
+ingress:
+  visibility: Public
+  rules:
+    - host: ""
+      path: "/"
+      port: 8080

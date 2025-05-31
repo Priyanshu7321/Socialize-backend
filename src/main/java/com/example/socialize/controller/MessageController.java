@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/chat")
-public class Messenger {
+public class MessageController {
 
     @Autowired
     private MessengerService messengerService;
