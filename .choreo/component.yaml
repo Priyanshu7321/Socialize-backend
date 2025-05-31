@@ -1,13 +1,12 @@
 componentType: service
 name: socialize-app
 source:
-  type: Docker
-  image: your-dockerhub-username/socialize-app:latest
-build:
-  env:
-    - name: JAVA_OPTS
-      value: "-Xms256m -Xmx512m"
-  command: ["java", "-jar", "socialize.jar"]
+  type: GitHub
+  repository: https://github.com/Priyanshu7321/socialize
+  branch: main
+  build:
+    type: Maven
+    artifact: target/socialize-0.0.1-SNAPSHOT.jar
 container:
   port: 8080
 ingress:
