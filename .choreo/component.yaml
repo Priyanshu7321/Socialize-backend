@@ -2,11 +2,11 @@ componentType: service
 name: socialize-app
 source:
   type: GitHub
-  repository: https://github.com/Priyanshu7321/socialize
+  repository: https://github.com/your-username/socialize
   branch: main
   build:
-    type: Maven
-    artifact: target/socialize-0.0.1-SNAPSHOT.jar
+    type: Gradle
+    artifact: build/libs/socialize-app.jar
 container:
   port: 8080
 ingress:
