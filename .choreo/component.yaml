@@ -6,7 +6,7 @@ source:
   branch: main
   build:
     type: Gradle
-    artifact: build/libs/socialize-app.jar
+    artifact: build/libs/socialize-0.0.1-SNAPSHOT-plain.jar
 container:
   port: 8080
 ingress:
