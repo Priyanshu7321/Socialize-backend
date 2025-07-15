@@ -5,25 +5,22 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.util.Pair;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Document(collection = "posts")
 @Getter
 @Setter
-@Document(collection = "UsersInfo")
-public class User {
+public class Post {
     @Id
     String id;
-    String username;
-    String name;
-    String email;
-    String password;
-    String age;
-    String number;
-    LocalDateTime joinedDate;
-    Map<String,Boolean> friendUserNames;
+    String postFileName;
+    String postFileSize;
+    String postUploaderId;
+    String postInfo;
+    Map<String,List<String>> postComments;
+    Map<String,List<String>> postReactions;
+    Map<String,List<String>> postShares;
 }

@@ -1,15 +1,18 @@
 package com.example.socialize.controller;
 
-import org.apache.coyote.Response;
+import com.example.socialize.entity.Post;
+import com.example.socialize.service.PostService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.scheduling.annotation.Async;
+import java.util.concurrent.CompletableFuture;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -21,15 +24,17 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("file")
-public class MediaController {
+public class PostController {
+    @Autowired
+    PostService postService;
     public String UPLOAD_DIR = "uploads/";
+    @Async
     @PostMapping("upload/post")
-    public ResponseEntity<Map<String,String>> mediaupload(@RequestParam("file")MultipartFile file){
+    public CompletableFuture<ResponseEntity<Map<String,String>>> mediaupload(@RequestParam("file")MultipartFile file,@RequestBody Post post){
         Map<String,String> response = new HashMap<>();
-        response.put("message","file uploaded successfully");
         if(file.isEmpty()){
             response.put("message","empty file");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            return CompletableFuture.completedFuture(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response));
         }
         try{
             Path uploadPath = Paths.get(UPLOAD_DIR);
@@ -48,15 +53,12 @@ public class MediaController {
             response.put("path", filePath.toAbsolutePath().toString());
             response.put("message", "File uploaded successfully");
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+            postService.savePost(post);
+            return CompletableFuture.completedFuture(ResponseEntity.status(HttpStatus.CREATED).body(response));
 
         } catch (IOException e) {
             response.put("message", "File upload failed");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+            return CompletableFuture.completedFuture(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response));
         }
-
-
     }
-
-
 }

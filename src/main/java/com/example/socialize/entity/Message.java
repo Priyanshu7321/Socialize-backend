@@ -15,7 +15,6 @@ public class Message {
     @Id
     private String id;
 
-
     private String senderId;
 
     private String receiverId;

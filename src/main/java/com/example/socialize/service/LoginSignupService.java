@@ -1,5 +1,6 @@
 package com.example.socialize.service;
 
+import com.example.socialize.Constants;
 import com.example.socialize.entity.User;
 import com.example.socialize.repository.UserRepository;
 import com.example.socialize.tokenConfig.JwtTokenUtil;
@@ -55,7 +56,7 @@ public class LoginSignupService {
 
     public ResponseEntity<Map<String,String>> update(User user){
         Map<String,String> response = new HashMap<>();
-        String message = "task successful";
+        String message = Constants.UPDATE_MSG;
         response.put("message",message);
         userRepository.save(user);
 
